@@ -1,3 +1,4 @@
+import { CreateMLCEngine } from "@mlc-ai/web-llm";
 import { InputMUI } from "@/common/components/input";
 import { ArrowUpward } from "@mui/icons-material";
 import {
@@ -15,6 +16,12 @@ export const ChartGPT = () => {
   const theme = useTheme();
   const [message, setMessage] = useState<string>("");
   const [conversation, setConversation] = useState<TConversation[]>([]);
+
+  const engine = Promise. await CreateMLCEngine("gemma-2b-it-q4f32_1-MLC", {
+    initProgressCallback: (info) => {
+      console.log("⚡", info);
+    },
+  });
 
   /**
    * Capturar valor del campo de mensaje
