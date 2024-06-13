@@ -1,25 +1,70 @@
 import { InputMUI } from "@/common/components/input";
 import { ArrowUpward } from "@mui/icons-material";
-import { Box, Grid, IconButton, useTheme, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  IconButton,
+  useTheme,
+  Typography,
+  Stack,
+} from "@mui/material";
+import { ChangeEvent, MouseEvent, useState } from "react";
+import { TConversation } from "./types.d";
 
 export const ChartGPT = () => {
   const theme = useTheme();
+  const [message, setMessage] = useState<string>("");
+  const [conversation, setConversation] = useState<TConversation[]>([]);
+
+  /**
+   * Capturar valor del campo de mensaje
+   * @function handleChange
+   * @param event evento
+   */
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setMessage(event.target.value);
+  };
+
+  /**
+   * Enviar mensaje
+   * @function handleClick
+   * @param event evento
+   */
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    if (message) {
+      setConversation([...conversation, { message, type: "user" }]);
+      setMessage("");
+    }
+  };
 
   return (
-    <Box width="100vw" height="100vh" bgcolor={theme.palette.common.black}>
+    <Box width="100vw" height="100dvh" bgcolor={theme.palette.common.black}>
       <Grid container columns={12} rowGap={2} p={1}>
         <Grid item xs={12}>
-          <Box
+          <Stack
             border={`1px solid ${theme.palette.grey[800]}`}
             p={2}
             borderRadius={2}
+            gap={2}
           >
-            <Typography color="white">xs</Typography>
-          </Box>
+            {conversation?.map((item) => (
+              <Typography color="white">{item?.message ?? ""}</Typography>
+            ))}
+          </Stack>
         </Grid>
         <Grid item xs={12} display="flex" gap={2} alignItems="center">
-          <InputMUI label="Envía un mensaje a ChatGPT" />
+          <InputMUI
+            type="text"
+            name="message"
+            onChange={handleChange}
+            value={message}
+            label="Envía un mensaje a ChatGPT"
+          />
           <IconButton
+            type="button"
+            disabled={!message}
+            onClick={handleClick}
             sx={{
               background: theme.palette.grey[800],
               ":hover": { background: theme.palette.primary.main },
