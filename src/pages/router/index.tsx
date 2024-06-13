@@ -5,11 +5,9 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <h1>Login</h1>,
-    children: [
-      {
-        path: "chat-gpt",
-        element: <ChatGPTPage />,
-      },
-    ],
+  },
+  {
+    path: "chat-gpt",
+    element: <ChatGPTPage />,
   },
 ]);
