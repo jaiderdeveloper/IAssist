@@ -1,7 +1,7 @@
 import "@/common/css/index.css";
 import theme from "@/common/theme";
 import { router } from "@/pages/router";
-import { ThemeProvider } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
