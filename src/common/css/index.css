@@ -1,15 +1,16 @@
 body {
   margin: 0;
+  width: 100vw;
+  height: 100dvh;
+  background: #212121;
 }
 
 /* Estilo del scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
-  /* background-color: #838383; */
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background-color: #c0c0c0;
 }

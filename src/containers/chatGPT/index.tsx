@@ -6,17 +6,20 @@ import {
 } from "@mlc-ai/web-llm";
 import { ArrowUpward } from "@mui/icons-material";
 import {
-  Box,
-  Grid,
+  Container,
   IconButton,
+  Skeleton,
   Stack,
   Typography,
   useTheme,
 } from "@mui/material";
 import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
+import { styleSheet } from "./styles";
 
 export const ChartGPT = () => {
   const theme = useTheme();
+  const styles = styleSheet(theme);
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string>("");
   const [messageGPT, setMessageGPT] = useState<string>("");
   const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
@@ -41,9 +44,11 @@ export const ChartGPT = () => {
   const handleClick = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (message) {
+      setLoading(true);
       const dataMessages = messages;
       dataMessages.push({ role: "user", content: message });
       setMessages(dataMessages);
+      setMessage("");
       if (engine) {
         const chunks = await engine.chat.completions.create({
           messages: dataMessages,
@@ -57,8 +62,8 @@ export const ChartGPT = () => {
         }
         dataMessages.push({ role: "assistant", content: content });
         setMessages(dataMessages);
-        setMessage("");
         setMessageGPT("");
+        setLoading(false);
       }
     }
   };
@@ -76,48 +81,49 @@ export const ChartGPT = () => {
   }, []);
 
   return (
-    <Box width="100vw" height="100dvh" bgcolor={theme.palette.common.black}>
-      <Grid container columns={12} rowGap={2} p={1}>
-        <Grid item xs={12}>
-          <Stack
-            border={`1px solid ${theme.palette.grey[800]}`}
-            p={2}
-            borderRadius={2}
-            gap={2}
+    <Container sx={styles.container}>
+      <Stack sx={styles.messages}>
+        {messages?.map((item, index) => (
+          <Typography
+            sx={{ textAlign: item?.role === "user" ? "right" : "left" }}
+            key={index}
+            color={
+              item?.role === "user" ? "white" : theme.palette.secondary.light
+            }
           >
-            {messages?.map((item, index) => (
-              <Typography
-                key={index}
-                color={item?.role === "user" ? "white" : "green"}
-              >
-                {String(item.content ?? "")}
-              </Typography>
-            ))}
-            <Typography color="white">{messageGPT}</Typography>
-          </Stack>
-        </Grid>
-        <Grid item xs={12} display="flex" gap={2} alignItems="center">
+            {String(item.content ?? "")}
+          </Typography>
+        ))}
+        <Typography color="white">{messageGPT}</Typography>
+      </Stack>
+      <Stack sx={styles.flexibleContent}>
+        {loading ? (
+          <Skeleton variant="rounded" width="100%" height="38px" />
+        ) : (
           <InputMUI
             type="text"
             name="message"
             onChange={handleChange}
             value={message}
             label="Envía un mensaje a ChatGPT"
-            helperText={infoText}
           />
+        )}
+        {loading ? (
+          <Skeleton variant="circular" width="38px" height="38px" />
+        ) : (
           <IconButton
             type="button"
             disabled={!message}
             onClick={handleClick}
-            sx={{
-              background: theme.palette.grey[800],
-              ":hover": { background: theme.palette.primary.main },
-            }}
+            sx={styles.button}
           >
             <ArrowUpward />
           </IconButton>
-        </Grid>
-      </Grid>
-    </Box>
+        )}
+      </Stack>
+      <Typography color="white" fontSize="0.75rem" textAlign="center">
+        {infoText}
+      </Typography>
+    </Container>
   );
 };
