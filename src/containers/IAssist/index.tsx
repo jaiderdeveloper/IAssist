@@ -6,6 +6,7 @@ import {
 } from "@mlc-ai/web-llm";
 import { ArrowUpward } from "@mui/icons-material";
 import {
+  Box,
   Container,
   IconButton,
   Skeleton,
@@ -15,8 +16,9 @@ import {
 } from "@mui/material";
 import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import { styleSheet } from "./styles";
+import { Loading } from "./loading";
 
-export const ChartGPT = () => {
+export const IAssist = () => {
   const theme = useTheme();
   const styles = styleSheet(theme);
   const [loading, setLoading] = useState(false);
@@ -74,6 +76,8 @@ export const ChartGPT = () => {
         initProgressCallback: (info) => {
           setInfoText(info?.text ?? "");
         },
+      }).finally(() => {
+        setInfoText("");
       });
       setEngine(result);
     };
@@ -82,19 +86,34 @@ export const ChartGPT = () => {
 
   return (
     <Container sx={styles.container}>
+      <Loading infoText={infoText} />
       <Stack sx={styles.messages}>
         {messages?.map((item, index) => (
-          <Typography
-            sx={{ textAlign: item?.role === "user" ? "right" : "left" }}
-            key={index}
-            color={
-              item?.role === "user" ? "white" : theme.palette.secondary.light
-            }
-          >
-            {String(item.content ?? "")}
-          </Typography>
+          <Box key={index}>
+            <Typography
+              display="inline-block"
+              sx={
+                item?.role === "user"
+                  ? {
+                      p: "5px 12px",
+                      color: theme.palette.common.white,
+                      float: "right",
+                      borderRadius: 5,
+                      background: theme.palette.secondary.main,
+                    }
+                  : {
+                      color: theme.palette.common.white,
+                      float: "left",
+                    }
+              }
+            >
+              {String(item.content ?? "")}
+            </Typography>
+          </Box>
         ))}
-        <Typography color="white">{messageGPT}</Typography>
+        <Typography color={theme.palette.secondary.light}>
+          {messageGPT}
+        </Typography>
       </Stack>
       <Stack sx={styles.flexibleContent}>
         {loading ? (
@@ -121,9 +140,6 @@ export const ChartGPT = () => {
           </IconButton>
         )}
       </Stack>
-      <Typography color="white" fontSize="0.75rem" textAlign="center">
-        {infoText}
-      </Typography>
     </Container>
   );
 };

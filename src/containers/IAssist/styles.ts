@@ -5,7 +5,7 @@ export const styleSheet = (theme: Theme) => {
   const style: TStyle = {
     messages: {
       p: 2,
-      gap: 2,
+      gap: 3,
       borderRadius: 2,
       overflow: "auto",
     },
@@ -17,6 +17,9 @@ export const styleSheet = (theme: Theme) => {
       background: theme.palette.grey[800],
       height: "38px",
       width: "38px",
+      ":hover": {
+        background: theme.palette.secondary.main,
+      },
     },
     container: {
       display: "flex",
@@ -24,7 +27,7 @@ export const styleSheet = (theme: Theme) => {
       gap: 2,
       justifyContent: "end",
       height: "100dvh",
-      pb: 2,
+      pb: 4,
     },
   };
 

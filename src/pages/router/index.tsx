@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import ChatGPTPage from "../chatGPT";
+import IAssistPage from "../IAssist";
 import SignInPage from "../sign-in";
 
 export const router = createBrowserRouter([
@@ -8,7 +8,7 @@ export const router = createBrowserRouter([
     element: <SignInPage />,
   },
   {
-    path: "chat-gpt",
-    element: <ChatGPTPage />,
+    path: "assist",
+    element: <IAssistPage />,
   },
 ]);
