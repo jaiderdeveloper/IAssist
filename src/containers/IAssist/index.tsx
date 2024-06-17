@@ -14,7 +14,13 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  MouseEvent,
+  useEffect,
+  useState,
+} from "react";
 import { styleSheet } from "./styles";
 import { Loading } from "./loading";
 
@@ -43,7 +49,9 @@ export const IAssist = () => {
    * @function handleClick
    * @param event evento
    */
-  const handleClick = async (event: MouseEvent<HTMLButtonElement>) => {
+  const handleClick = async (
+    event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLDivElement>
+  ) => {
     event.preventDefault();
     if (message) {
       setLoading(true);
@@ -123,6 +131,7 @@ export const IAssist = () => {
             type="text"
             name="message"
             onChange={handleChange}
+            onKeyDown={(event) => event?.key === "Enter" && handleClick(event)}
             value={message}
             label="Envía un mensaje a ChatGPT"
           />
