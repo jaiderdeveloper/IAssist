@@ -1,6 +1,6 @@
 import { Backdrop, Typography } from "@mui/material";
 import { FC } from "react";
-import { TLoading } from "./types";
+import { TLoading } from "./types.d";
 
 export const Loading: FC<TLoading> = ({ infoText }) => {
   return (
