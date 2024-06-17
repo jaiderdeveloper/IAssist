@@ -133,7 +133,7 @@ export const IAssist = () => {
             onChange={handleChange}
             onKeyDown={(event) => event?.key === "Enter" && handleClick(event)}
             value={message}
-            label="Envía un mensaje a ChatGPT"
+            label="Envía un mensaje a IAssist"
           />
         )}
         {loading ? (
