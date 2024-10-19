@@ -2,7 +2,7 @@
 
 ![img project](/public/project-img.png)
 
-IAssist is a virtual assistance platform that offers fast and accurate answers to various queries. Based on artificial intelligence technology such as ChatGPT, IAssist interacts conversationally and adapts to users’ needs, providing personalized recommendations and effective solutions.
+IAssist is a virtual assistance platform that offers fast and accurate answers to various queries. Based on artificial intelligence technology such as ChatGPT, IAssist interacts conversationally and adapts to users’ needs, providing personalized recommendations and effective solutions. [Check a demo](https://i-assist-vert.vercel.app/)
 
 ## Getting Started
 
